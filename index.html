@@ -76,10 +76,23 @@ map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
 var popup = new L.Popup({ autoPan: false });
 
-var otiLayer = L.geoJson(otiCountries, {
-      style: getStyle,
-      onEachFeature: onEachFeature
-  }).addTo(map);
+//var otiLayer = L.geoJson(otiCountries, {
+//      style: getStyle,
+//      onEachFeature: onEachFeature
+//  }).addTo(map);
+
+var otiLayer = L.mapbox.featureLayer()
+	.loadURL('global-oti.geojson')
+	.on('ready',function(){
+		otiLayer.eachLayer(function(layer) {
+			console.log(layer.feature);
+			onEachFeature(layer.feature,layer);
+		}) 
+			
+	})
+	.addTo(map);
+
+
 
    function getStyle(feature) {
        return {
