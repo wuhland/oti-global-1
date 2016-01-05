@@ -76,19 +76,16 @@ map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
 var popup = new L.Popup({ autoPan: false });
 
-//var otiLayer = L.geoJson(otiCountries, {
-//      style: getStyle,
-//      onEachFeature: onEachFeature
-//  }).addTo(map);
-
 var otiLayer = L.mapbox.featureLayer()
 	.loadURL('global-oti.geojson')
 	.on('ready',function(){
 		otiLayer.eachLayer(function(layer) {
 			console.log(layer.feature);
 			onEachFeature(layer.feature,layer);
+
+
 		})
-	 
+		 
 			
 	})
 	.addTo(map);
@@ -96,7 +93,6 @@ var otiLayer = L.mapbox.featureLayer()
 
 
    function getStyle(feature) {
-		console.log("getStyle")
        return {
            weight: 1,
            opacity: 0.5,
@@ -115,8 +111,9 @@ var otiLayer = L.mapbox.featureLayer()
 
    function onEachFeature(feature, layer) {
 
-	  layer.setStyle(getStyle(feature));
-		
+	  	layer.setStyle(getStyle(feature));
+
+
        var popupContent = '';
         popupContent += '<div class="marker-title">' + layer.feature.properties.OTI_name + '</div>'; 
         popupContent += '<b>' + 'Status: ' + '</b>' + layer.feature.properties.status;
@@ -154,7 +151,9 @@ var otiLayer = L.mapbox.featureLayer()
       // highlight feature
       layer.setStyle({
           weight: 1,
-          fillOpacity: 0.9
+          fillOpacity: 0.5, 
+          color: '#eee',
+          opacity: 0.5
       });
   }
 
